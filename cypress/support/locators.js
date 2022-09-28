@@ -34,7 +34,14 @@ const locators = {
         OPEN_MENU: '[data-test="menu-settings"]',
         RESETAR: '[href="/reset"]'
         
-    }
+    },
+    ATUALIZAR_CONTA:{
+        BTN_ATUALIZAR: ':nth-child(7) > :nth-child(2) > :nth-child(1) > .far',
+        CAMPO_TEXTO: '[data-test="nome"]',
+        BTN_CONFIRMAR_ATUALIZACAO: '.btn'
+      
+    },
+    
     
     
     // cy.get('[data-test="email"]').type('ralfsniper0102@gmail.com');

@@ -30,6 +30,14 @@ Cypress.Commands.add('tostMessage', (msg) => {
     cy.get(loc.TOAST.MSG).should('contain', msg);
 })
 
+//update conta
+Cypress.Commands.add('atualizarConta', (conta) => {
+    cy.get(loc.ATUALIZAR_CONTA.BTN_ATUALIZAR).click({force: true});
+    cy.get(loc.ATUALIZAR_CONTA.CAMPO_TEXTO).clear().type(conta);
+    cy.get(loc.ATUALIZAR_CONTA.BTN_CONFIRMAR_ATUALIZACAO).click({force: true});
+    cy.tostMessage('Conta atualizada com sucesso!');
+})
+
 Cypress.Commands.add('login', (email, password) => {
     cy.get(loc.LOGIN.USER).type(email);
     cy.get(loc.LOGIN.PASSWORD).type(password);
@@ -42,8 +50,18 @@ Cypress.Commands.add('criarTaxa', (nome) => {
     cy.acessarMenuConta();
 
     cy.get(loc.CRIAR_CONTA.NOME).type('Conta Teste');
-    cy.get(loc.CRIAR_CONTA.BTN_CRIAR_CONTA).click();
+    cy.get(loc.CRIAR_CONTA.BTN_CRIAR_CONTA).click({force: true});
     cy.tostMessage('Conta inserida com sucesso');
+
+});
+
+
+Cypress.Commands.add('duplicarTaxa', (nome) => {
+    cy.acessarMenuConta();
+
+    cy.get(loc.CRIAR_CONTA.NOME).type(nome);
+    cy.get(loc.CRIAR_CONTA.BTN_CRIAR_CONTA).click({force: true});
+    cy.tostMessage('code 400');
 
 });
 

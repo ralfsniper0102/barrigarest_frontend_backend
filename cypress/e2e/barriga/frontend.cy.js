@@ -6,7 +6,7 @@ import loc from '../../support/locators';
 import '../../support/commands';
 
 describe('Frontend', () => {
-    beforeEach(() => {
+    before(() => {
         cy.visit(loc.SITE_BARRIGA.LINK);
         cy.login('ralfsniper0102@gmail.com', '123456');  
     })
@@ -18,7 +18,12 @@ describe('Frontend', () => {
 
     it('atualizar conta', () => {
         cy.acessarMenuConta();
-        cy.xpath('//*[@id="root"]/div/div/div[2]/table/tbody').should('contain', 'Conta Teste');
+        cy.atualizarConta('Conta atualizada');
+        
+    })
+
+    it('criar conta repetida', () => {
+        cy.duplicarTaxa('Conta atualizada');
         
     })
        
