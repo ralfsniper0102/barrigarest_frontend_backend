@@ -26,15 +26,15 @@
 
 import loc from '../support/locators'; // Importa o arquivo de locators
 
-Cypress.Commands.add('tostMessage', (msg) => { 
+Cypress.Commands.add('tostMessage', (msg) => {
     cy.get(loc.TOAST.MSG).should('contain', msg);
 })
 
 //update conta
 Cypress.Commands.add('atualizarConta', (conta) => {
-    cy.get(loc.ATUALIZAR_CONTA.BTN_ATUALIZAR).click({force: true});
+    cy.get(loc.ATUALIZAR_CONTA.BTN_ATUALIZAR).click({ force: true });
     cy.get(loc.ATUALIZAR_CONTA.CAMPO_TEXTO).clear().type(conta);
-    cy.get(loc.ATUALIZAR_CONTA.BTN_CONFIRMAR_ATUALIZACAO).click({force: true});
+    cy.get(loc.ATUALIZAR_CONTA.BTN_CONFIRMAR_ATUALIZACAO).click({ force: true });
     cy.tostMessage('Conta atualizada com sucesso!');
 })
 
@@ -43,14 +43,14 @@ Cypress.Commands.add('login', (email, password) => {
     cy.get(loc.LOGIN.PASSWORD).type(password);
     cy.get(loc.LOGIN.BTN_ENTRAR).click();
     cy.tostMessage('Bem vindo');
-    
+
 });
 
 Cypress.Commands.add('criarTaxa', (nome) => {
     cy.acessarMenuConta();
 
     cy.get(loc.CRIAR_CONTA.NOME).type('Conta Teste');
-    cy.get(loc.CRIAR_CONTA.BTN_CRIAR_CONTA).click({force: true});
+    cy.get(loc.CRIAR_CONTA.BTN_CRIAR_CONTA).click({ force: true });
     cy.tostMessage('Conta inserida com sucesso');
 
 });
@@ -60,7 +60,7 @@ Cypress.Commands.add('duplicarTaxa', (nome) => {
     cy.acessarMenuConta();
 
     cy.get(loc.CRIAR_CONTA.NOME).type(nome);
-    cy.get(loc.CRIAR_CONTA.BTN_CRIAR_CONTA).click({force: true});
+    cy.get(loc.CRIAR_CONTA.BTN_CRIAR_CONTA).click({ force: true });
     cy.tostMessage('code 400');
 
 });
@@ -89,7 +89,7 @@ Cypress.Commands.add('resetar', () => {
 Cypress.Commands.add('getToken', (user, passwd) => {
     cy.request({ ///login
         method: 'POST',
-        url: 'https://barrigarest.wcaquino.me/signin',
+        url: '/signin',
         body: {
             email: user,
             redirecionar: false,
@@ -97,18 +97,19 @@ Cypress.Commands.add('getToken', (user, passwd) => {
         }
     }).its('body.token').should('not.be.empty') //verifica se o token não está vazio
         .then(token => {  ///salva o token
-            return token;
-        });
+            return token
+        })
 });
 
-Cypress.Commands.add('resetRest', () => {
-    cy.getToken('ralfsniper0102@gmail.com', '123456').then(token => {
-        cy.request({
-            method: 'GET',
-            url: 'https://barrigarest.wcaquino.me/reset',
-            headers: { Authorization: `JWT ${token}` }
-        })
-
+Cypress.Commands.add('resetRest', (token) => {
+    cy.request({
+        method: 'GET',
+        url: '/reset',
+        headers: { Authorization: `JWT ${token}` }
+    }).then(res => {
+        expect(res.status).to.be.equal(200)
     })
+
+
 
 });

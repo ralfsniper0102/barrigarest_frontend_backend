@@ -1,6 +1,7 @@
 const locators = {
     SITE_BARRIGA: {
-        LINK:'https://barrigareact.wcaquino.me/'
+        LINK:'https://barrigareact.wcaquino.me/',
+        LINK_CONTAS: 'https://barrigareact.wcaquino.me/contas/',
     },
     
     LOGIN:{
