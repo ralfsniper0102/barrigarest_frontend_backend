@@ -115,19 +115,20 @@ describe('backend', () => {
             let saldoConta = null
 
             res.body.forEach(c => {
-                if (c.conta === 'Conta para saldo') saldoConta = c.saldo
+                if (c.conta === 'Conta para saldo') {
+                    saldoConta = c.saldo
+                }
                 console.log(saldoConta)
             })
             expect(saldoConta).to.be.equal('534.00')
         }
-
 
         ).as('response')
 
         cy.get('@response').its('status').should('be.equal', 200)
 
     })
-
+    
 
 
 })
