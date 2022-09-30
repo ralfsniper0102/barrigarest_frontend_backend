@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "cypress-xpath": "^2.0.1",
+    "moment": "^2.29.4",
     "xpath": "^0.0.32"
   }
 }

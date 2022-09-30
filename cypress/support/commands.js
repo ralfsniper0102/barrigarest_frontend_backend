@@ -113,3 +113,16 @@ Cypress.Commands.add('resetRest', (token) => {
 
 
 });
+
+Cypress.Commands.add('getContaByName', (name, token) => {
+    cy.request({
+        method: 'GET',
+        url: '/contas',
+        headers: { Authorization: `JWT ${token}` },
+        qs: { // serch 
+            nome: name
+        }
+    }).then(res => {
+        return res.body[0].id
+    })
+});
