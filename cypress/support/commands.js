@@ -86,6 +86,18 @@ Cypress.Commands.add('resetar', () => {
 
 });
 
+
+Cypress.Commands.overwrite('request', (originalFn, ...options) => {
+    if (options.length === 1) {
+        if (Cypress.env('token')) {
+            options[0].headers = {
+                Authorization: `JWT ${Cypress.env('token')}`
+            }
+        }
+    }
+    return originalFn(...options)
+})
+
 Cypress.Commands.add('getToken', (user, passwd) => {
     cy.request({ ///login
         method: 'POST',
@@ -97,21 +109,19 @@ Cypress.Commands.add('getToken', (user, passwd) => {
         }
     }).its('body.token').should('not.be.empty') //verifica se o token não está vazio
         .then(token => {  ///salva o token
-            Cypress.env('token', token);
+            Cypress.env('token', token); 
             return token
         })
 });
 
-Cypress.Commands.add('resetRest', (token) => {
+Cypress.Commands.add('resetRest', () => {
     cy.request({
         method: 'GET',
         url: '/reset',
-        headers: { Authorization: `JWT ${token}` }
+        headers: { Authorization: `JWT ${Cypress.env('token')}` }
     }).then(res => {
         expect(res.status).to.be.equal(200)
     })
-
-
 
 });
 
@@ -140,5 +150,3 @@ Cypress.Commands.add('getContaByDescricao', (name, token) => {
         return res
     })
 });
-
-Cypress.Commands.overwrite

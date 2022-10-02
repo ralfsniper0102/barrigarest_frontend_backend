@@ -5,16 +5,16 @@ import loc from '../../support/locators';
 var moment = require('moment');
 
 describe('backend', () => {
-    let token;
+    //let token;
 
     before(() => {
         cy.getToken('ralfsniper0102@gmail.com', '123456')
-            .then(tkn => {
-                token = tkn;
-            })
+            // .then(tkn => {
+            //     token = tkn;
+            // })
     })
     beforeEach(() => {
-        cy.resetRest(token);
+        cy.resetRest();
     })
 
     it('cria conta', () => {
@@ -22,7 +22,7 @@ describe('backend', () => {
         cy.request({
             method: 'POST',
             url: '/contas',
-            headers: { Authorization: `JWT ${token}` },
+            //headers: { Authorization: `JWT ${token}` },
             body: {
                 nome: "Conta via rest"
             }
@@ -36,12 +36,12 @@ describe('backend', () => {
     })
 
     it('alterar conta', () => {
-        cy.getContaByName('Conta para alterar', token)
+        cy.getContaByName('Conta para alterar')
             .then(res => {
                 cy.request({
                     method: 'PUT',
                     url: `/contas/${res}`,
-                    headers: { Authorization: `JWT ${token}` },
+                    //headers: { Authorization: `JWT ${token}` },
                     body: {
                         nome: 'Conta alterada via rest'
                     }
@@ -59,7 +59,7 @@ describe('backend', () => {
         cy.request({
             method: 'POST',
             url: '/contas',
-            headers: { Authorization: `JWT ${token}` },
+            //headers: { Authorization: `JWT ${token}` },
             body: {
                 nome: "Conta para alterar"
             },
@@ -73,12 +73,12 @@ describe('backend', () => {
     })
 
     it('criar movimentação', () => {
-        cy.getContaByName('Conta para movimentacoes', token)
+        cy.getContaByName('Conta para movimentacoes')
             .then(contaId => {
                 cy.request({
                     method: 'POST',
                     url: '/transacoes',
-                    headers: { Authorization: `JWT ${token}` },
+                    //headers: { Authorization: `JWT ${token}` },
                     body: {
                         conta_id: contaId,
                         data_pagamento: moment().add({ days: 1 }).format('DD/MM/YYYY'),
@@ -99,7 +99,7 @@ describe('backend', () => {
             cy.request({
                 method: 'GET',
                 url: '/contas',
-                headers: { Authorization: `JWT ${token}` }
+                //headers: { Authorization: `JWT ${token}` }
             }).then(res => console.log(res))
         })
 
@@ -109,7 +109,7 @@ describe('backend', () => {
         cy.request({
             method: 'GET',
             url: '/saldo',
-            headers: { Authorization: `JWT ${token}` }
+            //headers: { Authorization: `JWT ${token}` }
 
         }).then(res => {
             let saldoConta = null
@@ -118,7 +118,7 @@ describe('backend', () => {
                 if (c.conta === 'Conta para saldo') {
                     saldoConta = c.saldo
                 }
-                console.log(saldoConta)
+                //console.log(saldoConta)
             })
             expect(saldoConta).to.be.equal('534.00')
         }
@@ -128,13 +128,13 @@ describe('backend', () => {
         cy.get('@response').its('status').should('be.equal', 200)
 
 
-        cy.getContaByDescricao('Movimentacao 1, calculo saldo', token)
+        cy.getContaByDescricao('Movimentacao 1, calculo saldo')
             .then(res => {
-                console.log(res.body)
+                //console.log(res.body)
                 cy.request({
                     method: 'PUT',
                     url: `/transacoes/${res.body[0].id}`,
-                    headers: { Authorization: `JWT ${token}` },
+                    //headers: { Authorization: `JWT ${token}` },
                     body: {
                         status: true,
                         data_transacao: moment(res.body[0].data_transacao).format('DD/MM/YYYY'),
@@ -152,7 +152,7 @@ describe('backend', () => {
         cy.request({
             method: 'GET',
             url: '/saldo',
-            headers: { Authorization: `JWT ${token}` }
+            //headers: { Authorization: `JWT ${token}` }
 
         }).then(res => {
             let saldoConta = null
@@ -161,19 +161,19 @@ describe('backend', () => {
                 if (c.conta === 'Conta para saldo') {
                     saldoConta = c.saldo
                 }
-                console.log(saldoConta)
+                //console.log(saldoConta)
             })
             expect(saldoConta).to.be.equal('4034.00')
         })
     })
 
     it('remover movimentação', () => {
-        cy.getContaByDescricao('Movimentacao para exclusao', token)
+        cy.getContaByDescricao('Movimentacao para exclusao')
             .then(res => {
                 cy.request({
                     method: 'DELETE',
                     url: `/transacoes/${res.body[0].id}`,
-                    headers: { Authorization: `JWT ${token}` }
+                    //headers: { Authorization: `JWT ${token}` }
                 }).its('status').should('be.equal', 204)
             })
     })
