@@ -97,6 +97,7 @@ Cypress.Commands.add('getToken', (user, passwd) => {
         }
     }).its('body.token').should('not.be.empty') //verifica se o token não está vazio
         .then(token => {  ///salva o token
+            Cypress.env('token', token);
             return token
         })
 });
@@ -126,3 +127,18 @@ Cypress.Commands.add('getContaByName', (name, token) => {
         return res.body[0].id
     })
 });
+
+Cypress.Commands.add('getContaByDescricao', (name, token) => {
+    cy.request({
+        method: 'GET',
+        url: '/transacoes',
+        headers: { Authorization: `JWT ${token}` },
+        qs: { // serch 
+            descricao: name
+        }
+    }).then(res => {
+        return res
+    })
+});
+
+Cypress.Commands.overwrite
