@@ -39,6 +39,7 @@ Cypress.Commands.add('atualizarConta', (conta) => {
 })
 
 Cypress.Commands.add('login', (email, password) => {
+    cy.visit(loc.SITE_BARRIGA.LINK);
     cy.get(loc.LOGIN.USER).type(email);
     cy.get(loc.LOGIN.PASSWORD).type(password);
     cy.get(loc.LOGIN.BTN_ENTRAR).click();

@@ -5,9 +5,9 @@ const xpath = require('cypress-xpath');
 import loc from '../../support/locators';
 import '../../support/commands';
 
-describe('Frontend', () => {
+describe('Funcional', () => {
     before(() => {
-        cy.visit(loc.SITE_BARRIGA.LINK);
+        //cy.visit(loc.SITE_BARRIGA.LINK);
         cy.login('ralfsniper0102@gmail.com', '123456');  
     })
 
