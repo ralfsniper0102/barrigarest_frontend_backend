@@ -7,9 +7,12 @@ import '../../support/commands';
 
 describe('Frontend', () => {
     after(() => {
+        
+
         cy.clearLocalStorage();
     });
 
+    
     before(() => {
         cy.intercept('POST', '**/signin', (req) => {
             req.reply({
@@ -21,6 +24,8 @@ describe('Frontend', () => {
                 }
             })
         }).as('signin')
+
+        cy.login('ralfsniper0102@gmail.com', '123456');
 
         cy.intercept('GET', '**/saldo', (req) => {
             req.reply({
@@ -37,6 +42,51 @@ describe('Frontend', () => {
         }).as('saldo')
 
 
+    })
+
+
+    beforeEach(() => {
+        
+        
+
+        
+
+        cy.intercept('GET', '**/contas', (req) => {
+            req.reply({
+                statusCode: 401,
+                body:
+                    [
+                        { id: 1421398, nome: "Conta para", visivel: true, usuario_id: 31018 },
+                        { id: 1421399, nome: "Conta mesmo nome", visivel: true, usuario_id: 31018 },
+                        { id: 1421400, nome: "Conta para movimentacoes", visivel: true, usuario_id: 31018 },
+                        { id: 1421401, nome: "Conta com movimentacao", visivel: true, usuario_id: 31018 },
+                        { id: 1421402, nome: "Conta para saldo", visivel: true, usuario_id: 31018 },
+                        { id: 1421403, nome: "Conta para extrato", visivel: true, usuario_id: 31018 },
+                        { id: 1421404, nome: "Conta atualizada", visivel: true, usuario_id: 31018 },
+                        { id: 1421405, nome: "Conta teste", visivel: true, usuario_id: 31018 }
+                    ]
+            })
+        }).as('contasAtualizada')
+
+        
+
+        cy.intercept('PUT', '**/contas/**', (req) => {
+            req.reply({
+                statusCode: 200,
+                body: { "id": 1421404, "nome": "Conta atualizada", "visivel": true, "usuario_id": 31018 }
+            })
+        }).as('contaAtualizada')
+
+        cy.intercept('POST', '**/contas', (req) => {
+            req.reply({
+                statusCode: 400,
+                body: { "error": "Já existe uma conta com esse nome!" }
+            })
+        }).as('contaDuplicada')
+    });
+
+    it('criar conta', () => {
+        //cy.resetar();
         cy.intercept('GET', '**/contas', (req) => {
             req.reply({
                 statusCode: 200,
@@ -53,21 +103,7 @@ describe('Frontend', () => {
             })
         }).as('contas')
 
-        // cy.intercept('GET', '**/contas', (req) => {
-        //     req.reply({
-        //         statusCode: 401,
-        //         body:
-        //             [
-        //                 { id: 1421398, nome: "Conta para", visivel: true, usuario_id: 31018 },
-        //                 { id: 1421399, nome: "Conta mesmo nome", visivel: true, usuario_id: 31018 },
-        //                 { id: 1421400, nome: "Conta para movimentacoes", visivel: true, usuario_id: 31018 },
-        //                 { id: 1421401, nome: "Conta com movimentacao", visivel: true, usuario_id: 31018 },
-        //                 { id: 1421402, nome: "Conta para saldo", visivel: true, usuario_id: 31018 },
-        //                 { id: 1421403, nome: "Conta para extrato", visivel: true, usuario_id: 31018 },
-        //                 { id: 1421404, nome: "Conta atualizada", visivel: true, usuario_id: 31018 }
-        //             ]
-        //     })
-        // }).as('contasAtualizada')
+        cy.criarTaxa('Conta Teste');
 
         cy.intercept('POST', '**/contas', (req) => {
             req.reply({
@@ -76,24 +112,6 @@ describe('Frontend', () => {
             })
         }).as('novaConta')
 
-
-        cy.intercept('PUT', '**/contas/**', (req) => {
-            req.reply({
-                statusCode: 200,
-                body: { "id": 1421405, "nome": "Conta alterada com sucesso", "visivel": true, "usuario_id": 31018 }
-            })
-        }).as('alteraConta')
-
-
-
-
-        cy.login('ralfsniper0102@gmail.com', '123456');
-
-    })
-
-    it('criar conta', () => {
-        //cy.resetar();
-        cy.criarTaxa('Conta Teste');
     })
 
     it('atualizar conta', () => {
