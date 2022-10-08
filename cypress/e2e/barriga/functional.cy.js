@@ -6,21 +6,21 @@ import loc from "../../support/locators";
 import "../../support/commands";
 
 describe("Funcional", () => {
-  before(() => {
-    cy.login("ralfsniper0102@gmail.com", "123456");
-  });
+    before(() => {
+        cy.login("ralfsniper0102@gmail.com", "123456");
+    });
 
-  it("criar conta", () => {
-    cy.resetar();
-    cy.criarTaxa("Conta Teste");
-  });
+    it("criar conta", () => {
+        cy.resetar();
+        cy.criarTaxa("Conta Teste");
+    });
 
-  it("atualizar conta", () => {
-    cy.acessarMenuConta();
-    cy.atualizarConta("Conta atualizada");
-  });
+    it("atualizar conta", () => {
+        cy.acessarMenuConta();
+        cy.atualizarConta("Conta atualizada");
+    });
 
-  it("criar conta repetida", () => {
-    cy.duplicarTaxa("Conta atualizada");
-  });
+    it("criar conta repetida", () => {
+        cy.duplicarTaxa("Conta atualizada");
+    });
 });
