@@ -23,62 +23,9 @@ describe("Frontend", () => {
     beforeEach(() => { });
 
     it("criar conta", () => {
-        cy.intercept("GET", "**/contas", (req) => {
-            req.reply({
-                statusCode: 200,
-                body: [
-                    { id: 1421398, nome: "Conta para", visivel: true, usuario_id: 31018 },
-                    {
-                        id: 1421399,
-                        nome: "Conta mesmo nome",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421400,
-                        nome: "Conta para movimentacoes",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421401,
-                        nome: "Conta com movimentacao",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421402,
-                        nome: "Conta para saldo",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421403,
-                        nome: "Conta para extrato",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421404,
-                        nome: "Conta atualizada",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                ],
-            });
-        }).as("contas");
+        buildEnv.contas();
 
-        cy.intercept("POST", "**/contas", (req) => {
-            req.reply({
-                statusCode: 201,
-                body: {
-                    id: 1421405,
-                    nome: "Conta Teste",
-                    visivel: true,
-                    usuario_id: 31018,
-                },
-            });
-        }).as("novaConta");
+        buildEnv.novaConta();
 
         cy.get(loc.CRIAR_CONTA.OPEN_MENU_CRIAR_CONTA).click();
 
@@ -87,238 +34,29 @@ describe("Frontend", () => {
         cy.get(loc.CRIAR_CONTA.NOME).type("Conta Teste");
         cy.get(loc.CRIAR_CONTA.BTN_CRIAR_CONTA).click({ force: true });
 
-        cy.intercept("GET", "**/contas", (req) => {
-            req.reply({
-                statusCode: 200,
-                body: [
-                    { id: 1421398, nome: "Conta para", visivel: true, usuario_id: 31018 },
-                    {
-                        id: 1421399,
-                        nome: "Conta mesmo nome",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421400,
-                        nome: "Conta para movimentacoes",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421401,
-                        nome: "Conta com movimentacao",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421402,
-                        nome: "Conta para saldo",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421403,
-                        nome: "Conta para extrato",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421404,
-                        nome: "Conta atualizada",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421405,
-                        nome: "Conta teste",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                ],
-            });
-        }).as("contaInserida");
-    });
-
+        buildEnv.contaInserida();
+    })
+    
     it("atualizar conta", () => {
-        cy.intercept("GET", "**/contas", (req) => {
-            req.reply({
-                statusCode: 200,
-                body: [
-                    { id: 1421398, nome: "Conta para", visivel: true, usuario_id: 31018 },
-                    {
-                        id: 1421399,
-                        nome: "Conta mesmo nome",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421400,
-                        nome: "Conta para movimentacoes",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421401,
-                        nome: "Conta com movimentacao",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421402,
-                        nome: "Conta para saldo",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421403,
-                        nome: "Conta para extrato",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421404,
-                        nome: "Conta atualizada",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421405,
-                        nome: "Conta teste",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                ],
-            });
-        }).as("contaInserida");
-
+        buildEnv.contaInserida();
         cy.acessarMenuConta();
 
         cy.get(loc.ATUALIZAR_CONTA.BTN_ATUALIZAR).click({ force: true });
         cy.get(loc.ATUALIZAR_CONTA.CAMPO_TEXTO).clear().type("Conta atualizada1");
 
-        cy.intercept("PUT", "**/contas/1421404", (req) => {
-            req.reply({
-                statusCode: 200,
-                body: {
-                    nome: "Conta atualizada1",
-                },
-            });
-        }).as("contaAtualizada");
+        buildEnv.contaAtualizada();
 
-        cy.intercept("GET", "**/contas", (req) => {
-            req.reply({
-                statusCode: 200,
-                body: [
-                    { id: 1421398, nome: "Conta para", visivel: true, usuario_id: 31018 },
-                    {
-                        id: 1421399,
-                        nome: "Conta mesmo nome",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421400,
-                        nome: "Conta para movimentacoes",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421401,
-                        nome: "Conta com movimentacao",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421402,
-                        nome: "Conta para saldo",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421403,
-                        nome: "Conta para extrato",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421404,
-                        nome: "Conta atualizada1",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421405,
-                        nome: "Conta teste",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                ],
-            });
-        }).as("contaAtualizada1");
-
+        
+        
         cy.get(loc.ATUALIZAR_CONTA.BTN_CONFIRMAR_ATUALIZACAO).click({
             force: true,
         });
     });
 
     it("criar conta repetida", () => {
-        cy.intercept("GET", "**/contas", (req) => {
-            req.reply({
-                statusCode: 200,
-                body: [
-                    { id: 1421398, nome: "Conta para", visivel: true, usuario_id: 31018 },
-                    {
-                        id: 1421399,
-                        nome: "Conta mesmo nome",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421400,
-                        nome: "Conta para movimentacoes",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421401,
-                        nome: "Conta com movimentacao",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421402,
-                        nome: "Conta para saldo",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421403,
-                        nome: "Conta para extrato",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421404,
-                        nome: "Conta atualizada1",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                    {
-                        id: 1421405,
-                        nome: "Conta teste",
-                        visivel: true,
-                        usuario_id: 31018,
-                    },
-                ],
-            });
-        }).as("contaAtualizada1");
+        buildEnv.contaAtualizada1();
 
-        cy.intercept("POST", "**/contas", (req) => {
-            req.reply({
-                statusCode: 400,
-                body: { error: "Já existe uma conta com esse nome!" },
-            });
-        }).as("contaDuplicada");
+        buildEnv.contaDuplicada();
 
         cy.duplicarTaxa("Conta atualizada1");
     });
