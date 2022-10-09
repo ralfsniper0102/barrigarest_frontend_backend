@@ -14,7 +14,7 @@ describe("Frontend", () => {
 
     before(() => {
 
-        buildEnv.LOGIN()
+        buildEnv.login()
 
 
         cy.login("ralfsniper0102@gmail.com", "123456");
