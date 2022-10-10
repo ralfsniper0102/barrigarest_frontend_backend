@@ -16,7 +16,6 @@ describe("Frontend", () => {
 
         buildEnv.login()
 
-
         cy.login("ralfsniper0102@gmail.com", "123456");
     })
 
@@ -36,7 +35,7 @@ describe("Frontend", () => {
 
         buildEnv.contaInserida();
     })
-    
+
     it("atualizar conta", () => {
         buildEnv.contaInserida();
         cy.acessarMenuConta();
@@ -46,8 +45,6 @@ describe("Frontend", () => {
 
         buildEnv.contaAtualizada();
 
-        
-        
         cy.get(loc.ATUALIZAR_CONTA.BTN_CONFIRMAR_ATUALIZACAO).click({
             force: true,
         });

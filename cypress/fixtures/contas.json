@@ -1,0 +1,44 @@
+[
+    {
+        "id": "1421398",
+        "nome": "Conta para",
+        "visivel": "true",
+        "usuario_id": "31018"
+    },
+    {
+        "id": "1421399",
+        "nome": "Conta mesmo nome",
+        "visivel": "true",
+        "usuario_id": "31018"
+    },
+    {
+        "id": "1421400",
+        "nome": "Conta para movimentacoes",
+        "visivel": "true",
+        "usuario_id": "31018"
+    },
+    {
+        "id": "1421401",
+        "nome": "Conta com movimentacao",
+        "visivel": "true",
+        "usuario_id": "31018"
+    },
+    {
+        "id": "1421402",
+        "nome": "Conta para saldo",
+        "visivel": "true",
+        "usuario_id": "31018"
+    },
+    {
+        "id": "1421403",
+        "nome": "Conta para extrato",
+        "visivel": "true",
+        "usuario_id": "31018"
+    },
+    {
+        "id": "1421404",
+        "nome": "Conta atualizada",
+        "visivel": "true",
+        "usuario_id": "31018"
+    }
+]

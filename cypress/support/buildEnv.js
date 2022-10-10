@@ -1,5 +1,7 @@
-const login = () => {
+import saldofixture from "../fixtures/saldo.json"
+import contasfixture from "../fixtures/contas.json"
 
+const login = () => {
   cy.intercept("POST", "**/signin", (req) => {
     req.reply({
       statusCode: 200,
@@ -15,71 +17,21 @@ const login = () => {
   cy.intercept("GET", "**/saldo", (req) => {
     req.reply({
       statusCode: 200,
-      body: [
-        {
-          conta_id: 1421400,
-          conta: "Conta para movimentacoes",
-          saldo: "-100000500.00",
-        },
-        {
-          conta_id: 142100,
-          conta: "Conta para movimentacoes1",
-          saldo: "100000500.00",
-        },
-      ],
+      body: 
+        saldofixture
+      ,
     });
   }).as("saldo")
-
 }
 
 const contas = () => {
   cy.intercept("GET", "**/contas", (req) => {
     req.reply({
       statusCode: 200,
-      body: [
-        { id: 1421398, nome: "Conta para", visivel: true, usuario_id: 31018 },
-        {
-          id: 1421399,
-          nome: "Conta mesmo nome",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421400,
-          nome: "Conta para movimentacoes",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421401,
-          nome: "Conta com movimentacao",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421402,
-          nome: "Conta para saldo",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421403,
-          nome: "Conta para extrato",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421404,
-          nome: "Conta atualizada",
-          visivel: true,
-          usuario_id: 31018,
-        },
-      ],
+      body: contasfixture,
     });
   }).as("contas");
-
 }
-
 
 const novaConta = () => {
   cy.intercept("POST", "**/contas", (req) => {
@@ -96,12 +48,15 @@ const novaConta = () => {
 }
 
 const contaInserida = () => {
-
   cy.intercept("GET", "**/contas", (req) => {
     req.reply({
       statusCode: 200,
       body: [
-        { id: 1421398, nome: "Conta para", visivel: true, usuario_id: 31018 },
+        { id: 1421398, 
+          nome: "Conta para", 
+          visivel: true, 
+          usuario_id: 31018 
+        },
         {
           id: 1421399,
           nome: "Conta mesmo nome",
@@ -143,11 +98,10 @@ const contaInserida = () => {
           nome: "Conta teste",
           visivel: true,
           usuario_id: 31018,
-        },
+        }
       ],
     });
   }).as("contaInserida");
-
 }
 
 const contaAtualizada = () => {
@@ -213,6 +167,7 @@ const contaAtualizada1 = () => {
     });
   }).as("contaAtualizada1");
 }
+
 const contaDuplicada = () => {
   cy.intercept("POST", "**/contas", (req) => {
     req.reply({
@@ -221,7 +176,6 @@ const contaDuplicada = () => {
     });
   }).as("contaDuplicada");
 }
-
 
 module.exports = {
   login,
