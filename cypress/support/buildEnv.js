@@ -1,5 +1,5 @@
-import saldofixture from "../fixtures/saldo.json"
-import contasfixture from "../fixtures/contas.json"
+// import saldofixture from "../fixtures/saldo.json"
+// import contasfixture from "../fixtures/contas.json"
 
 const login = () => {
   cy.intercept("POST", "**/signin", (req) => {
@@ -51,55 +51,7 @@ const contaInserida = () => {
   cy.intercept("GET", "**/contas", (req) => {
     req.reply({
       statusCode: 200,
-      body: [
-        { id: 1421398, 
-          nome: "Conta para", 
-          visivel: true, 
-          usuario_id: 31018 
-        },
-        {
-          id: 1421399,
-          nome: "Conta mesmo nome",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421400,
-          nome: "Conta para movimentacoes",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421401,
-          nome: "Conta com movimentacao",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421402,
-          nome: "Conta para saldo",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421403,
-          nome: "Conta para extrato",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421404,
-          nome: "Conta atualizada",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421405,
-          nome: "Conta teste",
-          visivel: true,
-          usuario_id: 31018,
-        }
-      ],
+      body: contaInserida,
     });
   }).as("contaInserida");
 }
@@ -119,51 +71,7 @@ const contaAtualizada1 = () => {
   cy.intercept("GET", "**/contas", (req) => {
     req.reply({
       statusCode: 200,
-      body: [
-        { id: 1421398, nome: "Conta para", visivel: true, usuario_id: 31018 },
-        {
-          id: 1421399,
-          nome: "Conta mesmo nome",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421400,
-          nome: "Conta para movimentacoes",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421401,
-          nome: "Conta com movimentacao",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421402,
-          nome: "Conta para saldo",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421403,
-          nome: "Conta para extrato",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421404,
-          nome: "Conta atualizada1",
-          visivel: true,
-          usuario_id: 31018,
-        },
-        {
-          id: 1421405,
-          nome: "Conta teste",
-          visivel: true,
-          usuario_id: 31018,
-        },
-      ],
+      body: contaAtualizada1,
     });
   }).as("contaAtualizada1");
 }
