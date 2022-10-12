@@ -14,15 +14,36 @@ describe("Frontend", () => {
 
     before(() => {
 
+        // buildEnv.login()
+
+        // cy.login("ralfsniper0102@gmail.com", "123456");
+    })
+
+    beforeEach(() => {
+
         buildEnv.login()
 
         cy.login("ralfsniper0102@gmail.com", "123456");
-    })
 
-    beforeEach(() => { });
+        cy.wait('@signin')
+            .then(res => console.log(res))
+            .its('request.body.email').should('eql', 'ralfsniper0102@gmail.com')
+
+
+
+        //cy.wrap({ age: 52 }).its('age').should('eq', 52) 
+        //.should('equal','ralfsniper0102@gmail.com');
+
+
+        //then(res => console.log(res.request.body.email));
+
+
+
+    });
 
     it("criar conta", () => {
         buildEnv.contas();
+
 
         buildEnv.novaConta();
 
@@ -51,11 +72,18 @@ describe("Frontend", () => {
     });
 
     it("criar conta repetida", () => {
+
+        buildEnv.contaAtualizada();
+
+        cy.acessarMenuConta();
+
         buildEnv.contaAtualizada1();
 
         buildEnv.contaDuplicada();
 
         cy.duplicarTaxa("Conta atualizada1");
+
+        cy.viewport('iphone-xr')
     });
 });
 

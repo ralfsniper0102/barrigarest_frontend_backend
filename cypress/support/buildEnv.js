@@ -1,5 +1,7 @@
-// import saldofixture from "../fixtures/saldo.json"
-// import contasfixture from "../fixtures/contas.json"
+import contaAtualizada1Fixtures from "../fixtures/contaAtualizada1.json"
+import contaInseridaFixtures from "../fixtures/contaInserida.json"
+import contasFixtures from "../fixtures/contas.json"
+import saldoFixtures from "../fixtures/saldo.json"
 
 const login = () => {
   cy.intercept("POST", "**/signin", (req) => {
@@ -17,9 +19,8 @@ const login = () => {
   cy.intercept("GET", "**/saldo", (req) => {
     req.reply({
       statusCode: 200,
-      body: 
-        saldofixture
-      ,
+      body:
+        saldoFixtures,
     });
   }).as("saldo")
 }
@@ -28,7 +29,7 @@ const contas = () => {
   cy.intercept("GET", "**/contas", (req) => {
     req.reply({
       statusCode: 200,
-      body: contasfixture,
+      body: contasFixtures,
     });
   }).as("contas");
 }
@@ -51,7 +52,7 @@ const contaInserida = () => {
   cy.intercept("GET", "**/contas", (req) => {
     req.reply({
       statusCode: 200,
-      body: contaInserida,
+      body: contaInseridaFixtures,
     });
   }).as("contaInserida");
 }
@@ -71,7 +72,7 @@ const contaAtualizada1 = () => {
   cy.intercept("GET", "**/contas", (req) => {
     req.reply({
       statusCode: 200,
-      body: contaAtualizada1,
+      body: contaAtualizada1Fixtures,
     });
   }).as("contaAtualizada1");
 }
